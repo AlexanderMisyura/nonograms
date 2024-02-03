@@ -7,8 +7,8 @@ import ButtonsBlockView from '../buttonsBlock';
 import toggleTheme from '../../helpers/toggleTheme';
 
 const navbarCss = {
-  navbar: 'navbar is-flex is-align-items-center',
-  navbarBrand: 'navbar-brand is-flex is-align-items-center',
+  navbar: 'navbar is-align-items-center',
+  navbarBrand: 'navbar-brand is-align-items-center',
   navbarEnd: 'navbar-end',
   navbarMenu: 'navbar-menu is-shadowless',
   logo: 'image has-ratio',
