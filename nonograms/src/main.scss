@@ -2,6 +2,19 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
 
+@import 'bulma/sass/utilities/_all';
+@import 'bulma/sass/components/navbar';
+@import 'bulma/sass/elements/button';
+@import 'bulma/sass/elements/container';
+@import 'bulma/sass/elements/box';
+@import 'bulma/sass/elements/image';
+@import 'bulma/sass/helpers/flexbox';
+@import 'bulma/sass/helpers/other';
+@import 'bulma/sass/helpers/spacing';
+@import 'bulma/sass/helpers/typography';
+
 @import './scss/reset';
 @import './scss/constants';
 @import './scss/base';
+
+@import './scss/darkTheme';
