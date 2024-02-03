@@ -1,5 +1,6 @@
 import '../main.scss';
 import HeaderView from './view/header';
+import MainView from './view/main';
 
 export default class App {
   constructor() {
@@ -8,6 +9,7 @@ export default class App {
 
   renderPage() {
     const header = new HeaderView();
-    document.body.append(header.getElement());
+    const main = new MainView();
+    document.body.append(header.getElement(), main.getElement());
   }
 }
