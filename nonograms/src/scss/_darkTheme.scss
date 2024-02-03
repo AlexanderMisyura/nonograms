@@ -1,0 +1,21 @@
+body.dark-theme {
+  background-color: $grey-lightest;
+  background-image: url('./assets/images/Random256Fabric08_black.png');
+
+  .container,
+  .box,
+  .navbar,
+  .navbar-menu {
+    background-color: $dark;
+    color: $white;
+  }
+
+  .image {
+   -webkit-filter: invert(1);
+   filter: invert(1);
+   }
+
+   .navbar-burger {
+    color: $white;
+   }
+}

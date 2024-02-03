@@ -4,6 +4,7 @@ import BaseView from '../view-base';
 import HTMLElementGenerator from '../../util/HTMLElementGenerator';
 import BurgerView from '../burger';
 import ButtonsBlockView from '../buttonsBlock';
+import toggleTheme from '../../helpers/toggleTheme';
 
 const navbarCss = {
   navbar: 'navbar is-flex is-align-items-center',
@@ -45,6 +46,7 @@ const iconButtons = [
       active: buttonCss.iconSun,
       inactive: buttonCss.iconMoon,
     },
+    callback: toggleTheme,
   },
 ];
 
