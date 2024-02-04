@@ -1,0 +1,85 @@
+.nonogram {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 3px solid black;
+  grid-column: 2;
+  grid-row: 2;
+
+  * {
+    box-sizing: content-box;
+  }
+
+  &__cell {
+    min-width: 20px;
+    aspect-ratio: 1;
+    flex: 1 1 auto;
+    position: relative;
+    border: 1px solid black;
+
+    &:nth-child(5n + 5):not(.nonogram__cell:last-child) {
+      border-right: 3px solid black;
+    }
+
+    &.check-filled {
+      background-color: black;
+    }
+
+    &.check-empty {
+      .nonogram__value {
+        display: block;
+      }
+    }
+  }
+
+  &__value {
+    display: none;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      width: 30%;
+      height: 1px;
+      background-color: grey;
+      top: 50%;
+      left: 50%;
+    }
+
+    &::before {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+    &::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+  }
+
+  &__row {
+    display: flex;
+    flex: 1 1 auto;
+
+    &:nth-child(5n + 5):not(.nonogram__row:last-child) {
+      .nonogram__cell {
+        border-bottom: 3px solid black;
+      }
+    }
+  }
+}
+
+body.dark-theme {
+  .nonogram {
+    border-color: hsl(0, 0%, 71%);
+
+    .nonogram__cell {
+      border-color: hsl(0, 0%, 71%);
+
+      &.check-filled {
+        background-color: hsl(0, 0%, 71%);
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import BaseView from '../view-base';
 import TimerView from '../timer';
+import NonogramSectionView from '../nonogramSection';
 
 export default class MainView extends BaseView {
   constructor() {
@@ -9,11 +10,16 @@ export default class MainView extends BaseView {
         'container is-flex is-justify-content-center is-align-items-center is-flex-direction-column',
     });
     this.timer = null;
+    this.nonogramSection = null;
     this.setupView();
   }
 
   setupView() {
     this.timer = new TimerView();
-    this.generator.appendChildren([this.timer.getElement()]);
+    this.nonogramSection = new NonogramSectionView();
+    this.generator.appendChildren([
+      this.timer.getElement(),
+      this.nonogramSection.getElement(),
+    ]);
   }
 }
