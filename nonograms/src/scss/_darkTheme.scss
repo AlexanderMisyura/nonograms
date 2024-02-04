@@ -6,7 +6,7 @@ body.dark-theme {
   .navbar,
   .navbar-menu {
     background-color: $dark;
-    color: $white;
+    color: $grey-lighter;
   }
 
   .image {
@@ -15,6 +15,10 @@ body.dark-theme {
    }
 
    .navbar-burger {
-    color: $white;
+    color: $grey-lighter;
+   }
+
+   .button.is-dark {
+    color: $grey-lighter;
    }
 }
