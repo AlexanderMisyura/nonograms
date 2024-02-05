@@ -66,3 +66,15 @@ export function traverseFromTop(matrix) {
   result = result[0].map((_, i) => result.map((row) => row[i]));
   return result;
 }
+
+export function copyMatrix(matrix) {
+  const copy = [];
+  matrix.forEach((row, rowIndex) => {
+    copy[rowIndex] = [];
+    row.forEach((cell, cellIndex) => {
+      copy[rowIndex][cellIndex] = 0;
+    });
+  });
+
+  return copy;
+}

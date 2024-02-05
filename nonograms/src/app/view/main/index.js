@@ -18,7 +18,7 @@ export default class MainView extends BaseView {
   setupView() {
     this.timer = new TimerView();
     this.modal = new ModalView();
-    this.nonogramSection = new NonogramSectionView(this.modal);
+    this.nonogramSection = new NonogramSectionView(this.modal, this.timer);
     this.generator.appendChildren([
       this.timer.getElement(),
       this.nonogramSection.getElement(),

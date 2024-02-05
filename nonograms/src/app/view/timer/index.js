@@ -39,10 +39,14 @@ export default class TimerView extends BaseView {
     return this.time;
   }
 
-  updateDisplay() {
+  getTimeFormatted() {
     const min = Math.floor(this.time / 60);
     const sec = this.time % 60;
-    this.timerDisplay.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
+    return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+  }
+
+  updateDisplay() {
+    this.timerDisplay.textContent = this.getTimeFormatted();
   }
 
   setupView() {

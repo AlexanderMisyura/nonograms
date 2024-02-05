@@ -1,12 +1,18 @@
 import './index.scss';
 import HTMLElementGenerator from '../../util/HTMLElementGenerator';
 import BaseView from '../view-base';
+import AudioPlayer from '../../util/AudioPlayer';
+import { copyMatrix } from '../../helpers/traverseMatrix';
 
 export default class NonogramFieldView extends BaseView {
-  constructor(data) {
+  constructor(data, modal, timer) {
     super({ tagName: 'div', className: 'nonogram' });
     this.nonogram = data;
     this.setupView(this.nonogram);
+    this.audio = new AudioPlayer();
+    this.modal = modal;
+    this.timer = timer;
+    this.userSolution = copyMatrix(data.solution);
   }
 
   setupView(nonogram) {
@@ -33,5 +39,130 @@ export default class NonogramFieldView extends BaseView {
 
       this.generator.appendChildren([rowGenerator]);
     });
+    this.setCallback();
+  }
+
+  paintCell(cell) {
+    cell.classList.remove('check-empty');
+    cell.classList.toggle('check-filled');
+  }
+
+  markCell(cell) {
+    cell.classList.remove('check-filled');
+    cell.classList.toggle('check-empty');
+  }
+
+  checkWin() {
+    for (let i = 0; i < this.nonogram.solution.length; i++) {
+      for (let j = 0; j < this.nonogram.solution[i].length; j++) {
+        const userCell = this.userSolution[i][j];
+        const solutionCell = this.nonogram.solution[i][j];
+        if ((userCell === 1 || solutionCell === 1) && userCell !== solutionCell)
+          return;
+      }
+    }
+    this.timer.pauseTimer();
+    this.openModal();
+    this.writeStorage();
+    this.audio.win();
+    this.removeCallback();
+  }
+
+  writeStorage() {
+    const currentWin = {
+      name: this.nonogram.name,
+      difficulty: this.nonogram.difficulty,
+      time: this.timer.getTime(),
+      formattedTime: this.timer.getTimeFormatted(),
+    };
+
+    let latestWins = JSON.parse(localStorage.getItem('wins'));
+
+    if (!latestWins) {
+      latestWins = [currentWin];
+    } else {
+      latestWins.unshift(currentWin);
+    }
+    latestWins = latestWins.slice(0, 5).toSorted((a, b) => a.time - b.time);
+    localStorage.setItem('wins', JSON.stringify(latestWins));
+  }
+
+  fillUserSolution({ cell, value }) {
+    const { clickRow, clickCell } = cell;
+    this.userSolution[clickRow][clickCell] = value;
+  }
+
+  getCellValue(cell) {
+    if (cell.classList.contains('check-filled')) return 1;
+    if (cell.classList.contains('check-empty')) return 2;
+    return 0;
+  }
+
+  openModal() {
+    const modalContentGenerator = new HTMLElementGenerator({
+      tagName: 'div',
+      className: 'box is-size-1 has-text-centered is-family-monospace',
+    });
+    modalContentGenerator.getHTMLElement().textContent = `Great! You have solved the nonogram in ${this.timer.getTime()} seconds!`;
+    this.modal.setContent(modalContentGenerator);
+    this.modal.open();
+  }
+
+  closeModal() {
+    this.modal.close();
+  }
+
+  clickHandler(e) {
+    const cell = e.target.closest('.nonogram__cell');
+    if (!cell) return;
+    this.timer.startTimer();
+    this.paintCell(cell);
+
+    const [clickRow, clickCell] = cell.id.split('-');
+    const userValue = this.getCellValue(cell);
+
+    this.fillUserSolution({
+      cell: { clickRow, clickCell },
+      value: userValue,
+    });
+
+    this.audio.click();
+
+    this.checkWin();
+  }
+
+  contextMenuHandler(e) {
+    e.preventDefault();
+    const cell = e.target.closest('.nonogram__cell');
+    if (!cell) return;
+    this.timer.startTimer();
+    this.markCell(cell);
+
+    const [clickRow, clickCell] = cell.id.split('-');
+    const userValue = this.getCellValue(cell);
+
+    this.fillUserSolution({
+      cell: { clickRow, clickCell },
+      value: userValue,
+    });
+
+    this.audio.contextMenu();
+
+    this.checkWin();
+  }
+
+  setCallback() {
+    this.clickHandler = this.clickHandler.bind(this);
+    this.contextMenuHandler = this.contextMenuHandler.bind(this);
+    this.getElement().addEventListener('click', this.clickHandler);
+    this.getElement().addEventListener('contextmenu', this.contextMenuHandler);
+  }
+
+  removeCallback() {
+    this.getElement().removeEventListener('click', this.clickHandler);
+    this.getElement().removeEventListener(
+      'contextmenu',
+      this.contextMenuHandler
+    );
   }
 }

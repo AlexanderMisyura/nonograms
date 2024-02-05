@@ -5,13 +5,13 @@ import NonogramHintView from '../nonogramHint';
 import nonograms from '../../nonograms';
 
 export default class NonogramSectionView extends BaseView {
-  constructor() {
+  constructor(modal, timer) {
     super({ tagName: 'section', className: 'section box nonogram-section' });
     this.nonogramField = null;
-    this.setupView(nonograms[0]);
+    this.setupView(nonograms[0], modal, timer);
   }
 
-  setupView(data) {
+  setupView(data, modal, timer) {
     const { solution } = data;
     const nonogramTopHint = new NonogramHintView({ solution, top: true });
     nonogramTopHint.getElement().classList.add('hint-top');
@@ -20,7 +20,7 @@ export default class NonogramSectionView extends BaseView {
       top: false,
     });
     nonogramSideHint.getElement().classList.add('hint-side');
-    const nonogramField = new NonogramFieldView(data);
+    const nonogramField = new NonogramFieldView(data, modal, timer);
     this.nonogramField = nonogramField;
     this.generator.appendChildren([
       nonogramTopHint.getElement(),
