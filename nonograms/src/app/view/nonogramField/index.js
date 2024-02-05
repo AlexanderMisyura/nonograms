@@ -14,6 +14,11 @@ export default class NonogramFieldView extends BaseView {
     this.userSolution = copyMatrix(data.solution);
   }
 
+  changeOwnNonogram(data) {
+    this.nonogram = data;
+    this.userSolution = copyMatrix(data.solution);
+  }
+
   setupView(nonogram) {
     const { solution } = nonogram;
     solution.forEach((row, rowIndex) => {

@@ -31,6 +31,7 @@ export default class NavbarView extends BaseView {
     });
     this.main = main;
     this.audio = main.audio;
+    this.nonogramSection = main.nonogramSection;
     this.nonogramField = main.nonogramSection.nonogramField;
     this.setupView(this.main);
   }
@@ -57,7 +58,13 @@ export default class NavbarView extends BaseView {
       { textContent: 'Continue Game', className: buttonCss.plainBtn },
       { textContent: 'Change Nonogram', className: buttonCss.plainBtn },
       { textContent: 'Results', className: buttonCss.plainBtn },
-      { textContent: 'Random Game', className: buttonCss.plainBtn },
+      {
+        textContent: 'Random Game',
+        className: buttonCss.plainBtn,
+        callback: this.nonogramSection.setupRandomNonogram.bind(
+          this.nonogramSection
+        ),
+      },
     ];
 
     const iconButtons = [
