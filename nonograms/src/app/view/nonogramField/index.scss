@@ -75,7 +75,7 @@ body.dark-theme {
     border-color: hsl(0, 0%, 71%);
 
     .nonogram__cell {
-      border-color: hsl(0, 0%, 71%);
+      border-color: hsl(0, 0%, 71%) !important;
 
       &.check-filled {
         background-color: hsl(0, 0%, 71%);
