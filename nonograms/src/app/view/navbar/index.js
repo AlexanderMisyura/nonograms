@@ -67,7 +67,11 @@ export default class NavbarView extends BaseView {
         ),
       },
       { textContent: 'Change Nonogram', className: buttonCss.plainBtn },
-      { textContent: 'Results', className: buttonCss.plainBtn },
+      {
+        textContent: 'Results',
+        className: buttonCss.plainBtn,
+        callback: this.main.showResults.bind(this.main),
+      },
       {
         textContent: 'Random Game',
         className: buttonCss.plainBtn,
