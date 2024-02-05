@@ -27,8 +27,10 @@ export default class AudioPlayer {
   async stopAudio() {
     const audioList = Object.getOwnPropertyNames(this);
     audioList.forEach((audio) => {
-      this[audio].pause();
-      this[audio].currentTime = 0;
+      if (this[audio].readyState === 4) {
+        this[audio].pause();
+        this[audio].currentTime = 0;
+      }
     });
   }
 
