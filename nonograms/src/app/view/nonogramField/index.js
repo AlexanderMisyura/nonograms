@@ -41,6 +41,21 @@ export default class NonogramFieldView extends BaseView {
     this.setCallback();
   }
 
+  resetField() {
+    const { solution } = this.nonogram;
+    const nonogramField = this.getElement();
+    for (let i = 0; i < solution.length; i++) {
+      for (let j = 0; j < solution[i].length; j++) {
+        const cell = nonogramField.querySelector(`#cell-${i}-${j}`);
+        cell.classList.remove('check-filled');
+        cell.classList.remove('check-empty');
+      }
+    }
+    this.timer.resetTimer();
+    this.removeCallback();
+    this.setCallback();
+  }
+
   revealSolution() {
     this.timer.resetTimer();
 

@@ -31,6 +31,7 @@ export default class NavbarView extends BaseView {
     });
     this.main = main;
     this.audio = main.audio;
+    this.nonogramField = main.nonogramSection.nonogramField;
     this.setupView(this.main);
   }
 
@@ -47,7 +48,11 @@ export default class NavbarView extends BaseView {
     navbarMenuGenerator.appendChildren([navbarEndGenerator]);
 
     const plainButtons = [
-      { textContent: 'Restart', className: buttonCss.plainBtn },
+      {
+        textContent: 'Reset',
+        className: buttonCss.plainBtn,
+        callback: this.nonogramField.resetField.bind(this.nonogramField),
+      },
       { textContent: 'Save Game', className: buttonCss.plainBtn },
       { textContent: 'Continue Game', className: buttonCss.plainBtn },
       { textContent: 'Change Nonogram', className: buttonCss.plainBtn },
