@@ -2,6 +2,8 @@ import BaseView from '../view-base';
 import TimerView from '../timer';
 import NonogramSectionView from '../nonogramSection';
 import ModalView from '../modal';
+import ButtonView from '../button';
+import HTMLElementGenerator from '../../util/HTMLElementGenerator';
 
 export default class MainView extends BaseView {
   constructor() {
@@ -19,8 +21,27 @@ export default class MainView extends BaseView {
     this.timer = new TimerView();
     this.modal = new ModalView();
     this.nonogramSection = new NonogramSectionView(this.modal, this.timer);
-    this.generator.appendChildren([
+
+    const container = new HTMLElementGenerator({
+      tagName: 'section',
+      className: 'section is-flex is-align-items-center',
+    });
+
+    const { nonogramField } = this.nonogramSection;
+
+    const showSolutionButton = new ButtonView({
+      textContent: 'Show solution',
+      className: 'button is-white is-large m-0',
+      callback: nonogramField.revealSolution.bind(nonogramField),
+    });
+
+    container.appendChildren([
       this.timer.getElement(),
+      showSolutionButton.getElement(),
+    ]);
+
+    this.generator.appendChildren([
+      container,
       this.nonogramSection.getElement(),
       this.modal.getElement(),
     ]);

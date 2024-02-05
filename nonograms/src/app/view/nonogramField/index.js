@@ -27,7 +27,7 @@ export default class NonogramFieldView extends BaseView {
         const cellGenerator = new HTMLElementGenerator({
           tagName: 'div',
           className: 'nonogram__cell',
-          attributes: { id: `${rowIndex}-${cellIndex}` },
+          attributes: { id: `cell-${rowIndex}-${cellIndex}` },
         });
         const valueGenerator = new HTMLElementGenerator({
           tagName: 'span',
@@ -40,6 +40,26 @@ export default class NonogramFieldView extends BaseView {
       this.generator.appendChildren([rowGenerator]);
     });
     this.setCallback();
+  }
+
+  revealSolution() {
+    this.timer.resetTimer();
+
+    const { solution } = this.nonogram;
+    const nonogramField = this.getElement();
+    for (let i = 0; i < solution.length; i++) {
+      for (let j = 0; j < solution[i].length; j++) {
+        const cell = nonogramField.querySelector(`#cell-${i}-${j}`);
+        if (
+          (solution[i][j] === 1 && !cell.classList.contains('check-filled')) ||
+          (solution[i][j] !== 1 && cell.classList.contains('check-filled'))
+        ) {
+          this.paintCell(cell);
+        }
+      }
+    }
+
+    this.removeCallback();
   }
 
   paintCell(cell) {
@@ -118,7 +138,7 @@ export default class NonogramFieldView extends BaseView {
     this.timer.startTimer();
     this.paintCell(cell);
 
-    const [clickRow, clickCell] = cell.id.split('-');
+    const [, clickRow, clickCell] = cell.id.split('-');
     const userValue = this.getCellValue(cell);
 
     this.fillUserSolution({
@@ -138,7 +158,7 @@ export default class NonogramFieldView extends BaseView {
     this.timer.startTimer();
     this.markCell(cell);
 
-    const [clickRow, clickCell] = cell.id.split('-');
+    const [, clickRow, clickCell] = cell.id.split('-');
     const userValue = this.getCellValue(cell);
 
     this.fillUserSolution({

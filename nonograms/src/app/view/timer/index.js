@@ -1,15 +1,13 @@
-import HTMLElementGenerator from '../../util/HTMLElementGenerator';
 import BaseView from '../view-base';
 
 export default class TimerView extends BaseView {
   constructor(startTimeStamp = 0) {
     super({
-      tagName: 'section',
-      className: 'section',
+      tagName: 'div',
+      className: 'box is-size-2 is-family-monospace mb-0 mr-6',
     });
     this.time = startTimeStamp;
     this.timerId = null;
-    this.timerDisplay = null;
     this.setupView();
   }
 
@@ -46,16 +44,10 @@ export default class TimerView extends BaseView {
   }
 
   updateDisplay() {
-    this.timerDisplay.textContent = this.getTimeFormatted();
+    this.getElement().textContent = this.getTimeFormatted();
   }
 
   setupView() {
-    const containerGenerator = new HTMLElementGenerator({
-      tagName: 'div',
-      className: 'box is-size-2 is-family-monospace',
-    });
-    this.timerDisplay = containerGenerator.getHTMLElement();
-    this.timerDisplay.textContent = '0:00';
-    this.generator.appendChildren([this.timerDisplay]);
+    this.getElement().textContent = '0:00';
   }
 }

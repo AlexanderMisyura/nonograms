@@ -26,10 +26,10 @@ const buttonCss = {
 const plainButtons = [
   { textContent: 'Restart', className: buttonCss.plainBtn },
   { textContent: 'Save Game', className: buttonCss.plainBtn },
+  { textContent: 'Continue Game', className: buttonCss.plainBtn },
   { textContent: 'Change Nonogram', className: buttonCss.plainBtn },
   { textContent: 'Results', className: buttonCss.plainBtn },
   { textContent: 'Random Game', className: buttonCss.plainBtn },
-  { textContent: 'Show Solution', className: buttonCss.plainBtn },
 ];
 
 const iconButtons = [
