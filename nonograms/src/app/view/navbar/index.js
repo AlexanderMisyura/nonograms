@@ -51,15 +51,16 @@ const iconButtons = [
 ];
 
 export default class NavbarView extends BaseView {
-  constructor() {
+  constructor(main) {
     super({
       tagName: 'nav',
       className: navbarCss.navbar,
     });
-    this.setupView();
+    this.main = main;
+    this.setupView(this.main);
   }
 
-  setupView() {
+  setupView(main) {
     const navbarEndGenerator = new HTMLElementGenerator({
       tagName: 'div',
       className: navbarCss.navbarEnd,

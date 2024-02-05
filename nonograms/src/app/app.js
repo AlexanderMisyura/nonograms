@@ -8,8 +8,8 @@ export default class App {
   }
 
   renderPage() {
-    const header = new HeaderView();
     const main = new MainView();
+    const header = new HeaderView(main);
     document.body.append(header.getElement(), main.getElement());
   }
 }
