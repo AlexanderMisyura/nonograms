@@ -42,6 +42,7 @@ export default class NonogramSectionView extends BaseView {
     this.setNonogram(nonogram);
     this.timer.resetTimer(time);
     this.removeNonogram();
+    this.nonogramField.isShown = false;
     this.nonogramField.changeOwnNonogram(this.nonogram, solution);
     this.nonogramField.removeCallback();
     this.nonogramField.setupView({
