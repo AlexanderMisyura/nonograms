@@ -1,5 +1,6 @@
 import BaseView from '../view-base';
 import TimerView from '../timer';
+import AudioPlayer from '../../util/AudioPlayer';
 import NonogramSectionView from '../nonogramSection';
 import ModalView from '../modal';
 import ButtonView from '../button';
@@ -18,9 +19,14 @@ export default class MainView extends BaseView {
   }
 
   setupView() {
+    this.audio = new AudioPlayer();
     this.timer = new TimerView();
     this.modal = new ModalView();
-    this.nonogramSection = new NonogramSectionView(this.modal, this.timer);
+    this.nonogramSection = new NonogramSectionView(
+      this.modal,
+      this.timer,
+      this.audio
+    );
 
     const container = new HTMLElementGenerator({
       tagName: 'section',

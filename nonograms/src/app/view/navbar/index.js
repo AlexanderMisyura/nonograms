@@ -23,33 +23,6 @@ const buttonCss = {
   iconMoon: 'fa-solid fa-moon',
 };
 
-const plainButtons = [
-  { textContent: 'Restart', className: buttonCss.plainBtn },
-  { textContent: 'Save Game', className: buttonCss.plainBtn },
-  { textContent: 'Continue Game', className: buttonCss.plainBtn },
-  { textContent: 'Change Nonogram', className: buttonCss.plainBtn },
-  { textContent: 'Results', className: buttonCss.plainBtn },
-  { textContent: 'Random Game', className: buttonCss.plainBtn },
-];
-
-const iconButtons = [
-  {
-    className: buttonCss.iconBtn,
-    iconClassNames: {
-      active: buttonCss.iconVolumeOn,
-      inactive: buttonCss.iconVolumeOff,
-    },
-  },
-  {
-    className: buttonCss.iconBtn,
-    iconClassNames: {
-      active: buttonCss.iconSun,
-      inactive: buttonCss.iconMoon,
-    },
-    callback: toggleTheme,
-  },
-];
-
 export default class NavbarView extends BaseView {
   constructor(main) {
     super({
@@ -57,10 +30,11 @@ export default class NavbarView extends BaseView {
       className: navbarCss.navbar,
     });
     this.main = main;
+    this.audio = main.audio;
     this.setupView(this.main);
   }
 
-  setupView(main) {
+  setupView() {
     const navbarEndGenerator = new HTMLElementGenerator({
       tagName: 'div',
       className: navbarCss.navbarEnd,
@@ -71,6 +45,34 @@ export default class NavbarView extends BaseView {
       className: navbarCss.navbarMenu,
     });
     navbarMenuGenerator.appendChildren([navbarEndGenerator]);
+
+    const plainButtons = [
+      { textContent: 'Restart', className: buttonCss.plainBtn },
+      { textContent: 'Save Game', className: buttonCss.plainBtn },
+      { textContent: 'Continue Game', className: buttonCss.plainBtn },
+      { textContent: 'Change Nonogram', className: buttonCss.plainBtn },
+      { textContent: 'Results', className: buttonCss.plainBtn },
+      { textContent: 'Random Game', className: buttonCss.plainBtn },
+    ];
+
+    const iconButtons = [
+      {
+        className: buttonCss.iconBtn,
+        iconClassNames: {
+          active: buttonCss.iconVolumeOn,
+          inactive: buttonCss.iconVolumeOff,
+        },
+        callback: this.audio.toggleMuteAudio.bind(this.audio),
+      },
+      {
+        className: buttonCss.iconBtn,
+        iconClassNames: {
+          active: buttonCss.iconSun,
+          inactive: buttonCss.iconMoon,
+        },
+        callback: toggleTheme,
+      },
+    ];
 
     const buttonsBlockPlain = new ButtonsBlockView(plainButtons);
     const buttonsBlockIcon = new ButtonsBlockView(iconButtons);

@@ -1,15 +1,14 @@
 import './index.scss';
 import HTMLElementGenerator from '../../util/HTMLElementGenerator';
 import BaseView from '../view-base';
-import AudioPlayer from '../../util/AudioPlayer';
 import { copyMatrix } from '../../helpers/traverseMatrix';
 
 export default class NonogramFieldView extends BaseView {
-  constructor(data, modal, timer) {
+  constructor(data, modal, timer, audio) {
     super({ tagName: 'div', className: 'nonogram' });
     this.nonogram = data;
     this.setupView(this.nonogram);
-    this.audio = new AudioPlayer();
+    this.audio = audio;
     this.modal = modal;
     this.timer = timer;
     this.userSolution = copyMatrix(data.solution);

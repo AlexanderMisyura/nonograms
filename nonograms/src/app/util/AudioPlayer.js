@@ -31,4 +31,11 @@ export default class AudioPlayer {
       this[audio].currentTime = 0;
     });
   }
+
+  async toggleMuteAudio() {
+    const audioList = Object.getOwnPropertyNames(this);
+    audioList.forEach((audio) => {
+      this[audio].muted = !this[audio].muted;
+    });
+  }
 }
