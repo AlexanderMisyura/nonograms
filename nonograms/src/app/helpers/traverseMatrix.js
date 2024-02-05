@@ -63,6 +63,6 @@ export function traverseFromTop(matrix) {
   }
 
   result = result.map((col) => padStartArray(col, maxLength, 0));
-  result = result[0].map((_, i) => result.map((row) => row[i]).reverse());
+  result = result[0].map((_, i) => result.map((row) => row[i]));
   return result;
 }
