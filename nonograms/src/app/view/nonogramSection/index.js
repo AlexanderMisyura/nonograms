@@ -18,6 +18,46 @@ export default class NonogramSectionView extends BaseView {
     this.setupView(this.nonogram, this.modal, this.timer, this.audio);
   }
 
+  saveNonogram() {
+    if (this.nonogramField.isShown) return;
+    const time = this.timer.getTime();
+    const solution = this.nonogramField.userSolution;
+    const { name, id } = this.nonogram;
+    localStorage.setItem(
+      'nonogramSave',
+      JSON.stringify({
+        time,
+        solution,
+        name,
+        id,
+      })
+    );
+  }
+
+  continueNonogram() {
+    const userNonogram = JSON.parse(localStorage.getItem('nonogramSave'));
+    if (!userNonogram) return;
+    const { time, solution, name, id } = userNonogram;
+    const nonogram = nonograms.find((item) => item.id === id);
+    this.setNonogram(nonogram);
+    this.timer.resetTimer(time);
+    this.removeNonogram();
+    this.nonogramField.changeOwnNonogram(this.nonogram, solution);
+    this.nonogramField.removeCallback();
+    this.nonogramField.setupView({
+      nonogram: { solution, name, id },
+      load: true,
+    });
+    this.nonogramTopHint.setupView({
+      solution: this.nonogram.solution,
+      top: true,
+    });
+    this.nonogramSideHint.setupView({
+      solution: this.nonogram.solution,
+      top: false,
+    });
+  }
+
   removeNonogram() {
     const nonogramField = this.nonogramField.getElement();
     while (nonogramField.firstElementChild) {
@@ -48,7 +88,8 @@ export default class NonogramSectionView extends BaseView {
     this.removeNonogram();
     this.nonogramField.changeOwnNonogram(this.nonogram);
     this.nonogramField.removeCallback();
-    this.nonogramField.setupView(this.nonogram);
+    this.nonogramField.isShown = false;
+    this.nonogramField.setupView({ nonogram: this.nonogram });
     this.nonogramTopHint.setupView({
       solution: this.nonogram.solution,
       top: true,

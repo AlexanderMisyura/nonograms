@@ -54,8 +54,18 @@ export default class NavbarView extends BaseView {
         className: buttonCss.plainBtn,
         callback: this.nonogramField.resetField.bind(this.nonogramField),
       },
-      { textContent: 'Save Game', className: buttonCss.plainBtn },
-      { textContent: 'Continue Game', className: buttonCss.plainBtn },
+      {
+        textContent: 'Save Game',
+        className: buttonCss.plainBtn,
+        callback: this.nonogramSection.saveNonogram.bind(this.nonogramSection),
+      },
+      {
+        textContent: 'Continue Game',
+        className: buttonCss.plainBtn,
+        callback: this.nonogramSection.continueNonogram.bind(
+          this.nonogramSection
+        ),
+      },
       { textContent: 'Change Nonogram', className: buttonCss.plainBtn },
       { textContent: 'Results', className: buttonCss.plainBtn },
       {

@@ -7,19 +7,20 @@ export default class NonogramFieldView extends BaseView {
   constructor(data, modal, timer, audio) {
     super({ tagName: 'div', className: 'nonogram' });
     this.nonogram = data;
-    this.setupView(this.nonogram);
+    this.setupView({ nonogram: this.nonogram });
     this.audio = audio;
     this.modal = modal;
     this.timer = timer;
+    this.isShown = false;
     this.userSolution = copyMatrix(data.solution);
   }
 
-  changeOwnNonogram(data) {
+  changeOwnNonogram(data, userSolution) {
     this.nonogram = data;
-    this.userSolution = copyMatrix(data.solution);
+    this.userSolution = userSolution || copyMatrix(data.solution);
   }
 
-  setupView(nonogram) {
+  setupView({ nonogram, load = false }) {
     const { solution } = nonogram;
     solution.forEach((row, rowIndex) => {
       const rowGenerator = new HTMLElementGenerator({
@@ -33,6 +34,10 @@ export default class NonogramFieldView extends BaseView {
           className: 'nonogram__cell',
           attributes: { id: `cell-${rowIndex}-${cellIndex}` },
         });
+        if (load) {
+          const cellClasses = { 1: 'check-filled', 2: 'check-empty' };
+          cellGenerator.getHTMLElement().classList.add(cellClasses[cell]);
+        }
         const valueGenerator = new HTMLElementGenerator({
           tagName: 'span',
           className: 'nonogram__value',
@@ -47,6 +52,7 @@ export default class NonogramFieldView extends BaseView {
   }
 
   resetField() {
+    this.isShown = false;
     const { solution } = this.nonogram;
     const nonogramField = this.getElement();
     for (let i = 0; i < solution.length; i++) {
@@ -58,10 +64,12 @@ export default class NonogramFieldView extends BaseView {
     }
     this.timer.resetTimer();
     this.removeCallback();
+    this.userSolution = copyMatrix(this.nonogram.solution);
     this.setCallback();
   }
 
   revealSolution() {
+    this.isShown = true;
     this.timer.resetTimer();
 
     const { solution } = this.nonogram;
@@ -105,6 +113,7 @@ export default class NonogramFieldView extends BaseView {
     this.writeStorage();
     this.audio.win();
     this.removeCallback();
+    this.userSolution = copyMatrix(this.userSolution);
   }
 
   writeStorage() {

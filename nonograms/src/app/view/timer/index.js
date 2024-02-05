@@ -27,9 +27,9 @@ export default class TimerView extends BaseView {
     }
   }
 
-  resetTimer() {
+  resetTimer(newTime = 0) {
     this.pauseTimer();
-    this.time = 0;
+    this.time = newTime;
     this.updateDisplay();
   }
 
