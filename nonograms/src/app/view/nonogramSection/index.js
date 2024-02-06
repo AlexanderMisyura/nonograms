@@ -18,6 +18,10 @@ export default class NonogramSectionView extends BaseView {
     this.setupView(this.nonogram, this.modal, this.timer, this.audio);
   }
 
+  getAllNonograms() {
+    return nonograms;
+  }
+
   saveNonogram() {
     if (this.nonogramField.isShown) return;
     const time = this.timer.getTime();
@@ -77,6 +81,11 @@ export default class NonogramSectionView extends BaseView {
   setupRandomNonogram() {
     const randomIndex = random(0, nonograms.length - 1);
     this.setNonogram(nonograms[randomIndex]);
+    this.resetSection();
+  }
+
+  setupNonogramByIndex(index) {
+    this.setNonogram(nonograms[index]);
     this.resetSection();
   }
 

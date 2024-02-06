@@ -66,7 +66,11 @@ export default class NavbarView extends BaseView {
           this.nonogramSection
         ),
       },
-      { textContent: 'Change Nonogram', className: buttonCss.plainBtn },
+      {
+        textContent: 'Change Nonogram',
+        className: buttonCss.plainBtn,
+        callback: this.main.showNonograms.bind(this.main),
+      },
       {
         textContent: 'Results',
         className: buttonCss.plainBtn,
