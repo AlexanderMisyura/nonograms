@@ -1,12 +1,14 @@
 import clickSound from '../../assets/sounds/click.wav';
 import contextMenuSound from '../../assets/sounds/context_menu.wav';
 import winAudio from '../../assets/sounds/win.wav';
+import clackAudio from '../../assets/sounds/clack.wav';
 
 export default class AudioPlayer {
   constructor() {
     this.clickAudio = new Audio(clickSound);
     this.contextMenuAudio = new Audio(contextMenuSound);
     this.winAudio = new Audio(winAudio);
+    this.clackAudio = new Audio(clackAudio);
   }
 
   async click() {
@@ -17,6 +19,11 @@ export default class AudioPlayer {
   async contextMenu() {
     await this.stopAudio();
     this.contextMenuAudio.play();
+  }
+
+  async clack() {
+    await this.stopAudio();
+    this.clackAudio.play();
   }
 
   async win() {

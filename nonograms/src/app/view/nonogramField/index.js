@@ -132,7 +132,8 @@ export default class NonogramFieldView extends BaseView {
     } else {
       latestWins.unshift(currentWin);
     }
-    latestWins = latestWins.slice(0, 5).toSorted((a, b) => a.time - b.time);
+    // latestWins = latestWins.slice(0, 5).toSorted((a, b) => a.time - b.time);
+    latestWins = latestWins.slice(0, 5);
     localStorage.setItem('wins', JSON.stringify(latestWins));
   }
 
@@ -142,8 +143,15 @@ export default class NonogramFieldView extends BaseView {
   }
 
   getCellValue(cell) {
-    if (cell.classList.contains('check-filled')) return 1;
-    if (cell.classList.contains('check-empty')) return 2;
+    if (cell.classList.contains('check-filled')) {
+      this.audio.click();
+      return 1;
+    }
+    if (cell.classList.contains('check-empty')) {
+      this.audio.contextMenu();
+      return 2;
+    }
+    this.audio.clack();
     return 0;
   }
 
@@ -175,7 +183,7 @@ export default class NonogramFieldView extends BaseView {
       value: userValue,
     });
 
-    this.audio.click();
+    // this.audio.click();
 
     this.checkWin();
   }
@@ -195,7 +203,7 @@ export default class NonogramFieldView extends BaseView {
       value: userValue,
     });
 
-    this.audio.contextMenu();
+    // this.audio.contextMenu();
 
     this.checkWin();
   }

@@ -37,7 +37,7 @@ export default class MainView extends BaseView {
     const { nonogramField } = this.nonogramSection;
 
     const showSolutionButton = new ButtonView({
-      textContent: 'Show solution',
+      textContent: 'Solution',
       className: 'button is-white is-large m-0',
       callback: nonogramField.revealSolution.bind(nonogramField),
     });
@@ -55,7 +55,7 @@ export default class MainView extends BaseView {
   }
 
   showResults() {
-    const results = JSON.parse(localStorage.getItem('wins'));
+    let results = JSON.parse(localStorage.getItem('wins'));
     if (!results) return;
     const box = new HTMLElementGenerator({
       tagName: 'div',
@@ -82,6 +82,8 @@ export default class MainView extends BaseView {
     trTop.appendChildren(thTopRow);
 
     const tBody = new HTMLElementGenerator({ tagName: 'tbody' });
+
+    results = results.toSorted((a, b) => a.time - b.time);
     results.forEach((result, index) => {
       const tr = new HTMLElementGenerator({ tagName: 'tr' });
       const { name, difficulty, formattedTime } = result;

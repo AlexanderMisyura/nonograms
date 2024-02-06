@@ -15,7 +15,7 @@ const navbarCss = {
 };
 
 const buttonCss = {
-  plainBtn: 'button is-white is-medium m-0',
+  plainBtn: 'button is-white is-medium pl-3 pr-3 m-0',
   iconBtn: 'button is-white is-large m-0 has-width-50',
   iconVolumeOn: 'fa-solid fa-volume-high',
   iconVolumeOff: 'fa-solid fa-volume-xmark',
@@ -50,7 +50,7 @@ export default class NavbarView extends BaseView {
 
     const plainButtons = [
       {
-        textContent: 'Reset',
+        textContent: 'Reset Game',
         className: buttonCss.plainBtn,
         callback: this.nonogramField.resetField.bind(this.nonogramField),
       },
@@ -60,7 +60,7 @@ export default class NavbarView extends BaseView {
         callback: this.nonogramSection.saveNonogram.bind(this.nonogramSection),
       },
       {
-        textContent: 'Continue Game',
+        textContent: 'Continue Last Game',
         className: buttonCss.plainBtn,
         callback: this.nonogramSection.continueNonogram.bind(
           this.nonogramSection
