@@ -1,0 +1,23 @@
+body.dark-theme {
+  .table {
+    color: hsl(0, 0%, 71%) !important;
+    background-color: hsl(0, 0%, 21%);
+
+    thead td,
+    thead th {
+      border-color: hsl(0, 0%, 43%);
+      color: hsl(0, 0%, 43%);
+    }
+    td, th {
+      border-color: hsl(0, 0%, 40%);
+    }
+
+    &.is-striped tbody tr:not(.is-selected):nth-child(even) {
+      background-color: hsl(0, 0%, 24%);
+    }
+
+    &.is-hoverable.is-striped tbody tr:not(.is-selected):hover {
+    background-color: hsl(0, 0%, 30%);
+}
+  }
+}
