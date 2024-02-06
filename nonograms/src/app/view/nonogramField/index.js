@@ -108,6 +108,7 @@ export default class NonogramFieldView extends BaseView {
           return;
       }
     }
+    this.isShown = true;
     this.timer.pauseTimer();
     this.openModal();
     this.writeStorage();
