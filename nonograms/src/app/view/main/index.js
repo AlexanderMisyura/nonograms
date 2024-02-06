@@ -1,3 +1,4 @@
+import './index.scss';
 import BaseView from '../view-base';
 import TimerView from '../timer';
 import AudioPlayer from '../../util/AudioPlayer';
